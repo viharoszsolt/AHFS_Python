@@ -34,11 +34,11 @@ classifiers = [
 ]
 
 [project.urls]
-Documentation = "TODO"
-Repository = "TODO"
+Documentation = "https://ahfs.readthedocs.io/en/latest/"
+Repository = "https://github.com/BenGercuj/ahfs"
 
 [tool.setuptools.packages.find]
-exclude = ["logs", "agi_lm", "datasets", "docs", "pyitlib", "sphinx", "tf_lm"]
+exclude = ["datasets", "docs"]
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }
