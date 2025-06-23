@@ -23,11 +23,11 @@ To run a preset configuration, first download the ```datasets``` folder from thi
 Secondly, import the desired configuration from ```utils.presets``` or use the example code found in ```utils.example```.
 Run the configuration by invoking the ```run()``` method on the class instance.
 
-Consult the API documentation for further details.
+Consult the [API documentation](https://ahfs.readthedocs.io/en/latest/) for further details.
 
 #### Running your own instance
 
-Consult the API documentation for further details.
+Consult the [API documentation](https://ahfs.readthedocs.io/en/latest/) for further details.
 
 ## FAQ
 
