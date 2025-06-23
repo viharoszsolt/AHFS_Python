@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ahfs"
+description = "Python implementation of the Adaptive, Hybrid Feature Selection algorithm."
+version = "2025.07"
+
+readme = "README.md"
+license = "LGPL-3.0-or-later"
+license-files = ["COPYING", "COPYING.LESSER"]
+
+requires-python = ">= 3.11"
+dynamic = ["dependencies"]
+
+authors = [
+    { name = "Bence Gercuj", email = "bencegercuj@gmail.com" },
+    { name = "Anh Tuan Hoang", email = "hoang.anh.tuan@sztaki.hun-ren.hu" },
+    { name = "Zsolt Janos Viharos", email = "viharos.zsolt@sztaki.hun-ren.hu" }
+]
+
+keywords = ["ahfs", "feature selection", "SZTAKI"]
+
+classifiers = [
+    "Development Status :: 6 - Mature",
+
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+
+    "Programming Language :: Python :: 3.12",
+
+    "Topic :: Scientific/Engineering :: Artificial Intelligence"
+]
+
+[project.urls]
+Documentation = "TODO"
+Repository = "TODO"
+
+[tool.setuptools.packages.find]
+exclude = ["logs", "agi_lm", "datasets", "docs", "pyitlib", "sphinx", "tf_lm"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
