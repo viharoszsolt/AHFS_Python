@@ -5,8 +5,7 @@ def log_results(path: str, features: list[int], loss: list[float], accuracy: lis
     """
     Logs AHFS results from a single run.
 
-    :param path: Folder path to establish logs in, must not exist. When running AHFS multiple times, establish a superdirectory, e.g. "novelAHFS_runs/{dataset}". Epoch time is automatically concatenated to the end of the path to avoid overwrite.
-    Folder naming should follow the format {arbitrary text}_{dataset name}_{arbitrary text} to ensure compatibility with other utility functions.
+    :param path: Folder path to establish logs in, must not exist. When running AHFS multiple times, establish a superdirectory, e.g. "novelAHFS_runs/{dataset}". Epoch time is automatically concatenated to the end of the path to avoid overwrite. Folder naming should follow the format {arbitrary text}_{dataset name}_{arbitrary text} to ensure compatibility with other utility functions.
     :type path: str
     :param features: Ordered list of selected features.
     :type features: list[int]
