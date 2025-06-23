@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Measures &#8212; Adaptive, Hybrid Feature Selection  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Base measure class" href="feasel_base.html" />
+    <link rel="prev" title="Evaluators" href="../evals.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="measures">
+<h1>Measures<a class="headerlink" href="#measures" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="feasel_base.html">Base measure class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feasel_base.html#feasel.helpers.feasel_frame.FeaselBase"><code class="docutils literal notranslate"><span class="pre">FeaselBase</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_FCBF.html">Fast Correlation-Based Filter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_FCBF.html#feasel.f_FCBF.FastCorrFS"><code class="docutils literal notranslate"><span class="pre">FastCorrFS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_mFCBF.html">Fast Correlation-Based Filter #</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_mFCBF.html#feasel.f_mFCBF.ModifiedFastCorrFS"><code class="docutils literal notranslate"><span class="pre">ModifiedFastCorrFS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_FCBFiP.html">Fast Correlation-Based Filter in Pieces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_FCBFiP.html#feasel.f_FCBFiP.FastCorriPFS"><code class="docutils literal notranslate"><span class="pre">FastCorriPFS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_FFSA.html">Forward Feature Selection Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_FFSA.html#feasel.f_FFSA.ForwardFeatureSel"><code class="docutils literal notranslate"><span class="pre">ForwardFeatureSel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_LCFS.html">Linear Correlation-based Feature Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_LCFS.html#feasel.f_LCFS.LinearCorrelation"><code class="docutils literal notranslate"><span class="pre">LinearCorrelation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_MMIFS.html">Modified Mutual Information-based Feature Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_MMIFS.html#feasel.f_MMIFS.ModifiedMutualInfo"><code class="docutils literal notranslate"><span class="pre">ModifiedMutualInfo</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_NMIFS.html">Normalized Mutual Information-based Feature Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_NMIFS.html#feasel.f_NMIFS.NormalizedMutualInfo"><code class="docutils literal notranslate"><span class="pre">NormalizedMutualInfo</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_mRMR.html">Minimum Redundancy Maximum Relevance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_mRMR.html#feasel.f_mRMR.MinRedMaxRel"><code class="docutils literal notranslate"><span class="pre">MinRedMaxRel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="f_ORIG.html">Distance-based Feature Selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="f_ORIG.html#feasel.f_ORIG.DistanceFS"><code class="docutils literal notranslate"><span class="pre">DistanceFS</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Adaptive, Hybrid Feature Selection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ahfs_module.html">AHFS class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evals.html">Evaluators</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Measures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feasel_base.html">Base measure class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_FCBF.html">Fast Correlation-Based Filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_mFCBF.html">Fast Correlation-Based Filter #</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_FCBFiP.html">Fast Correlation-Based Filter in Pieces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_FFSA.html">Forward Feature Selection Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_LCFS.html">Linear Correlation-based Feature Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_MMIFS.html">Modified Mutual Information-based Feature Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_NMIFS.html">Normalized Mutual Information-based Feature Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_mRMR.html">Minimum Redundancy Maximum Relevance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="f_ORIG.html">Distance-based Feature Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/index.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../evals.html" title="previous chapter">Evaluators</a></li>
+      <li>Next: <a href="feasel_base.html" title="next chapter">Base measure class</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Bence Gercuj, Anh Tuan Hoang, Dr. Zsolt János Viharos.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/feasel/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

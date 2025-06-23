@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Logging &#8212; Adaptive, Hybrid Feature Selection  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Metrics" href="metrics.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-utils.logs">
+<span id="logging"></span><h1>Logging<a class="headerlink" href="#module-utils.logs" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.logs.log_results">
+<span class="sig-prename descclassname"><span class="pre">utils.logs.</span></span><span class="sig-name descname"><span class="pre">log_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">path:</span> <span class="pre">str,</span> <span class="pre">features:</span> <span class="pre">list[int],</span> <span class="pre">loss:</span> <span class="pre">list[float],</span> <span class="pre">accuracy:</span> <span class="pre">list[float],</span> <span class="pre">periter:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">list[int],</span> <span class="pre">None)],</span> <span class="pre">eval_times:</span> <span class="pre">list[float],</span> <span class="pre">transform_time:</span> <span class="pre">float</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#utils.logs.log_results" title="Link to this definition">¶</a></dt>
+<dd><p>Logs AHFS results from a single run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Folder path to establish logs in, must not exist. When running AHFS multiple times, establish a superdirectory, e.g. “novelAHFS_runs/{dataset}”. Epoch time is automatically concatenated to the end of the path to avoid overwrite. Folder naming should follow the format {arbitrary text}_{dataset name}_{arbitrary text} to ensure compatibility with other utility functions.</p></li>
+<li><p><strong>features</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – Ordered list of selected features.</p></li>
+<li><p><strong>loss</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Ordered list of loss per iteration.</p></li>
+<li><p><strong>accuracy</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Ordered list of accuracy per iteration.</p></li>
+<li><p><strong>periter</strong> (<em>dict</em><em>[</em><em>str: list</em><em>[</em><em>int</em><em>]</em><em>]</em>) – Dictionary with measure names as keys and ordered list of candidate features suggested by the measure.</p></li>
+<li><p><strong>eval_times</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – Ordered list of evaluation time per iteration.</p></li>
+<li><p><strong>transform_time</strong> (<em>float</em>) – Transform time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Adaptive, Hybrid Feature Selection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ahfs_module.html">AHFS class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evals.html">Evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feasel/index.html">Measures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Utilities</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="preset_loader.html">Preset loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html">Preset configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html">Postprocessing, multiple comparisons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Logging</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Utilities</a><ul>
+      <li>Previous: <a href="metrics.html" title="previous chapter">Metrics</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Bence Gercuj, Anh Tuan Hoang, Dr. Zsolt János Viharos.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/utils/logs.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

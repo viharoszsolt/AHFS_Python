@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Preset configurations &#8212; Adaptive, Hybrid Feature Selection  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Preprocessing" href="preprocessing.html" />
+    <link rel="prev" title="Preset loader" href="preset_loader.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-utils.presets">
+<span id="preset-configurations"></span><h1>Preset configurations<a class="headerlink" href="#module-utils.presets" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.AbaloneDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">AbaloneDataset</span></span><a class="headerlink" href="#utils.presets.AbaloneDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.AbaloneDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.AbaloneDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.AbaloneDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.AbaloneDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.BankDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">BankDataset</span></span><a class="headerlink" href="#utils.presets.BankDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.BankDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.BankDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.BankDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.BankDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingFcDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">CalculatedCuttingFcDataset</span></span><a class="headerlink" href="#utils.presets.CalculatedCuttingFcDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingFcDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.CalculatedCuttingFcDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingFcDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.CalculatedCuttingFcDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingPDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">CalculatedCuttingPDataset</span></span><a class="headerlink" href="#utils.presets.CalculatedCuttingPDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingPDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.CalculatedCuttingPDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingPDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.CalculatedCuttingPDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingRaDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">CalculatedCuttingRaDataset</span></span><a class="headerlink" href="#utils.presets.CalculatedCuttingRaDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingRaDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.CalculatedCuttingRaDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingRaDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.CalculatedCuttingRaDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingTDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">CalculatedCuttingTDataset</span></span><a class="headerlink" href="#utils.presets.CalculatedCuttingTDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingTDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.CalculatedCuttingTDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CalculatedCuttingTDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.CalculatedCuttingTDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.CarDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">CarDataset</span></span><a class="headerlink" href="#utils.presets.CarDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CarDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.CarDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CarDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.CarDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.CommCrimeDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">CommCrimeDataset</span></span><a class="headerlink" href="#utils.presets.CommCrimeDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CommCrimeDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.CommCrimeDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.CommCrimeDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.CommCrimeDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.ForestFiresDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">ForestFiresDataset</span></span><a class="headerlink" href="#utils.presets.ForestFiresDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.ForestFiresDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.ForestFiresDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.ForestFiresDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.ForestFiresDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.HousingDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">HousingDataset</span></span><a class="headerlink" href="#utils.presets.HousingDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.HousingDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.HousingDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.HousingDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.HousingDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.IrisDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">IrisDataset</span></span><a class="headerlink" href="#utils.presets.IrisDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.IrisDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.IrisDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.IrisDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.IrisDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.MNISTTrain">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">MNISTTrain</span></span><a class="headerlink" href="#utils.presets.MNISTTrain" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MNISTTrain.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.MNISTTrain.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MNISTTrain.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.MNISTTrain.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingFcDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">MeasuredCuttingFcDataset</span></span><a class="headerlink" href="#utils.presets.MeasuredCuttingFcDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingFcDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.MeasuredCuttingFcDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingFcDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.MeasuredCuttingFcDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingPDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">MeasuredCuttingPDataset</span></span><a class="headerlink" href="#utils.presets.MeasuredCuttingPDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingPDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.MeasuredCuttingPDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingPDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.MeasuredCuttingPDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingRaDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">MeasuredCuttingRaDataset</span></span><a class="headerlink" href="#utils.presets.MeasuredCuttingRaDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingRaDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.MeasuredCuttingRaDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingRaDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.MeasuredCuttingRaDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingTDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">MeasuredCuttingTDataset</span></span><a class="headerlink" href="#utils.presets.MeasuredCuttingTDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingTDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.MeasuredCuttingTDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MeasuredCuttingTDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.MeasuredCuttingTDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.MitbihTest">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">MitbihTest</span></span><a class="headerlink" href="#utils.presets.MitbihTest" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MitbihTest.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.MitbihTest.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.MitbihTest.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.MitbihTest.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.ParkinsonsTelemonitoringMotorDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">ParkinsonsTelemonitoringMotorDataset</span></span><a class="headerlink" href="#utils.presets.ParkinsonsTelemonitoringMotorDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.ParkinsonsTelemonitoringMotorDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.ParkinsonsTelemonitoringMotorDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.ParkinsonsTelemonitoringMotorDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.ParkinsonsTelemonitoringMotorDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.ParkinsonsTelemonitoringTotalDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">ParkinsonsTelemonitoringTotalDataset</span></span><a class="headerlink" href="#utils.presets.ParkinsonsTelemonitoringTotalDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.ParkinsonsTelemonitoringTotalDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.ParkinsonsTelemonitoringTotalDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.ParkinsonsTelemonitoringTotalDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.ParkinsonsTelemonitoringTotalDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.ReplicatedParkinsonDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">ReplicatedParkinsonDataset</span></span><a class="headerlink" href="#utils.presets.ReplicatedParkinsonDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.ReplicatedParkinsonDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.ReplicatedParkinsonDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.ReplicatedParkinsonDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.ReplicatedParkinsonDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.SonarDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">SonarDataset</span></span><a class="headerlink" href="#utils.presets.SonarDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.SonarDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.SonarDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.SonarDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.SonarDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.SuperConductDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">SuperConductDataset</span></span><a class="headerlink" href="#utils.presets.SuperConductDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.SuperConductDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.SuperConductDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.SuperConductDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.SuperConductDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.WineDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">WineDataset</span></span><a class="headerlink" href="#utils.presets.WineDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.WineDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.WineDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.WineDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.WineDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.WineQualityRedDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">WineQualityRedDataset</span></span><a class="headerlink" href="#utils.presets.WineQualityRedDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.WineQualityRedDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.WineQualityRedDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.WineQualityRedDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.WineQualityRedDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.WisconsinBreastCancerDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">WisconsinBreastCancerDataset</span></span><a class="headerlink" href="#utils.presets.WisconsinBreastCancerDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.WisconsinBreastCancerDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.WisconsinBreastCancerDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.WisconsinBreastCancerDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.WisconsinBreastCancerDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.presets.YearPredDataset">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.presets.</span></span><span class="sig-name descname"><span class="pre">YearPredDataset</span></span><a class="headerlink" href="#utils.presets.YearPredDataset" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase" title="utils.helpers.loader.LoaderBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.YearPredDataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#utils.presets.YearPredDataset.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Base class for dataset processing and AHFS running. Only CSV files are supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the instance.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the CSV dataset.</p></li>
+<li><p><strong>target</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define target column(s). A list size greater than 1 implies one-hot encoding.</p></li>
+<li><p><strong>header</strong> (<em>None</em><em> | </em><em>int</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define header row(s). If None, no header is extracted from the data. Default value is None.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator character. Default value is “,”.</p></li>
+<li><p><strong>drop_columns</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which column(s) to remove. If None, no removal is done. Default value is None.</p></li>
+<li><p><strong>drop_rows</strong> (<em>None</em><em> | </em><em>list</em><em>[</em><em>int</em><em>]</em>) – List of indexes that define which row(s) to remove. If None, no removal is done. Default value is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.presets.YearPredDataset.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[list[int],</span> <span class="pre">list[float],</span> <span class="pre">list[float],</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)]]</span> <span class="pre">|</span> <span class="pre">tuple[~numpy.ndarray,</span> <span class="pre">~numpy.ndarray]</span></span></span><a class="headerlink" href="#utils.presets.YearPredDataset.run" title="Link to this definition">¶</a></dt>
+<dd><p>Function for running an AHFS instance on the loaded dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – Overrides AHFS run parameters. See below for detailed documentation.</p></li>
+<li><p><strong>k</strong> – Number of features to select. int</p></li>
+<li><p><strong>data_bin</strong> – How many bins to discretize the dataset into, excluding the target variable. If 0, no discretization is performed. Default value is 5. int</p></li>
+<li><p><strong>target_bin</strong> – How many bins to discretize the target into. Effectively sets the number of classes. If 0, no discretization is performed. Default value is 2. int</p></li>
+<li><p><strong>save_precomp</strong> – Whether to save all basic measures computed during the precomputing phase in a binary .npy file. Path is set by save_precomp_path. Default value is True. bool</p></li>
+<li><p><strong>save_precomp_path</strong> – If save_precomp is True, sets the path for saving the precomputed basic measures. If this variable’s value is None, saves into the current directory with filename format “measures_{time.time_ns()}.npy”. Default value is None. str | None</p></li>
+<li><p><strong>load_precomp_path</strong> – Path to load the precomputed basic measures from, skipping the precomputing phase. File must be a binary numpy file. If None, precomputing is not skipped. Default value is None. str | None</p></li>
+<li><p><strong>is_in_pipeline</strong> – Set to True if the algorithm is intended to be part of a scikit-learn pipeline. Changes the return value of transform() to X and y. Default value is False. bool</p></li>
+<li><p><strong>verbose</strong> – Controls global verbosity, including feature selection measures. 0: no output, 1: feature selection measure execution time, selected feature and metric, and basic algorithm steps are printed, 2: all steps are printed. Default value is 1. int</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the selected features, loss of the selected feature set, accuracy of the selected feature set, features selected per iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Adaptive, Hybrid Feature Selection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ahfs_module.html">AHFS class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evals.html">Evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feasel/index.html">Measures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Utilities</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="preset_loader.html">Preset loader</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Preset configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html">Postprocessing, multiple comparisons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logs.html">Logging</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Utilities</a><ul>
+      <li>Previous: <a href="preset_loader.html" title="previous chapter">Preset loader</a></li>
+      <li>Next: <a href="preprocessing.html" title="next chapter">Preprocessing</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Bence Gercuj, Anh Tuan Hoang, Dr. Zsolt János Viharos.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/utils/presets.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

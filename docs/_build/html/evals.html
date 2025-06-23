@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Evaluators &#8212; Adaptive, Hybrid Feature Selection  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Measures" href="feasel/index.html" />
+    <link rel="prev" title="AHFS class" href="ahfs_module.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="evaluators">
+<h1>Evaluators<a class="headerlink" href="#evaluators" title="Link to this heading">¶</a></h1>
+<p>Base class</p>
+<dl class="py class" id="module-evaluators.helpers.eval">
+<dt class="sig sig-object py" id="evaluators.helpers.eval.EvalBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">evaluators.helpers.eval.</span></span><span class="sig-name descname"><span class="pre">EvalBase</span></span><a class="headerlink" href="#evaluators.helpers.eval.EvalBase" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="evaluators.helpers.eval.EvalBase.__init__">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#evaluators.helpers.eval.EvalBase.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Abstract class for learning algorithms in the Adaptive, Hybrid Feature Selection framework.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="evaluators.helpers.eval.EvalBase.fit">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#evaluators.helpers.eval.EvalBase.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Abstract method for fitting the learning algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – Keyword arguments specific to individual evaluators.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="evaluators.helpers.eval.EvalBase.predict">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#evaluators.helpers.eval.EvalBase.predict" title="Link to this definition">¶</a></dt>
+<dd><p>Abstract function for predicting the target vector on the given data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>np.ndarray</em>) – Data to predict the target vector from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predicted label vector.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="evaluators.helpers.eval.EvalBase.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="utils/metrics.html#utils.metrics.Metrics" title="utils.metrics.Metrics"><span class="pre">Metrics</span></a></span></span><a class="headerlink" href="#evaluators.helpers.eval.EvalBase.score" title="Link to this definition">¶</a></dt>
+<dd><p>Performs a prediction, then compares with the true class labels. Returns a Metrics object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Data to predict the target vector from.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – Ground truth target vector.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Metrics object containing the predicted and true class labels.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="utils/metrics.html#utils.metrics.Metrics" title="utils.metrics.Metrics">Metrics</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>ANN with Levenberg-Marquardt optimization</p>
+<dl class="py class" id="module-evaluators.e_AgiLM">
+<dt class="sig sig-object py" id="evaluators.e_AgiLM.AgiLM">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">evaluators.e_AgiLM.</span></span><span class="sig-name descname"><span class="pre">AgiLM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">layers:</span> <span class="pre">list[[&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">collections.abc.Callable[[float],</span> <span class="pre">float]</span> <span class="pre">|</span> <span class="pre">None]],</span> <span class="pre">tau:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0,</span> <span class="pre">weights_boundary:</span> <span class="pre">list[float]</span> <span class="pre">=</span> <span class="pre">[-0.1,</span> <span class="pre">0.1]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#evaluators.e_AgiLM.AgiLM" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#evaluators.helpers.eval.EvalBase" title="evaluators.helpers.eval.EvalBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">EvalBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="evaluators.e_AgiLM.AgiLM.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">layers:</span> <span class="pre">list[[&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">collections.abc.Callable[[float],</span> <span class="pre">float]</span> <span class="pre">|</span> <span class="pre">None]],</span> <span class="pre">tau:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0,</span> <span class="pre">weights_boundary:</span> <span class="pre">list[float]</span> <span class="pre">=</span> <span class="pre">[-0.1,</span> <span class="pre">0.1]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#evaluators.e_AgiLM.AgiLM.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Implements the interface of an artificial neural network with Levenberg-Marquardt optimization made by VIHAROS, Zsolt János and SZŰCS, Ágnes.
+<a class="reference external" href="https://doi.org/10.48550/arXiv.2211.11491">https://doi.org/10.48550/arXiv.2211.11491</a></p>
+<p>Further improvements to this implementation were done by HOANG, Anh Tuan; VINCZE, Tibor; GERCUJ, Bence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layers</strong> (<em>list</em><em>[</em><em>[</em><em>int</em><em>, </em><em>Callable</em><em>[</em><em>[</em><em>float</em><em>]</em><em>, </em><em>float</em><em>] </em><em>| </em><em>None</em><em>]</em><em>, </em><em>]</em>) – A two-dimensional list describing the network architecture. Each sublist defines neuron count and activation function. Example: [[8, None], [4, sigmoid], [2, sigmoid]] describes an ANN with 8 inputs, one hidden layer with 4 neurons and sigmoid activation, and binary output with sigmoid activation. “sigmoid” is a Python function with signature (float) -&gt; float.</p></li>
+<li><p><strong>tau</strong> (<em>float</em>) – Tau parameter controlling the optimizer. Default value is 1.0.</p></li>
+<li><p><strong>weights_boundary</strong> (<em>list</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – Boundary for weights. Default value is [-0.1, 0.1].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="evaluators.e_AgiLM.AgiLM.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#evaluators.e_AgiLM.AgiLM.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Fits the neural network on the provided data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kwargs</strong> – See below for non-optional and relevant parameters. Consult the source code for the remaining arguments.</p></li>
+<li><p><strong>train_inputs</strong> – Data for the network to be fitted on. np.ndarray</p></li>
+<li><p><strong>train_targets</strong> – Target variable for training. np.ndarray</p></li>
+<li><p><strong>val_inputs</strong> – Data to test per epoch. np.ndarray</p></li>
+<li><p><strong>val_targets</strong> – Target variable for validation. np.ndarray</p></li>
+<li><p><strong>mu</strong> – Optimizer parameter. float</p></li>
+<li><p><strong>initial_tau</strong> – Optimizer parameter. float</p></li>
+<li><p><strong>max_iteration</strong> – Maximum number of epochs for training. int</p></li>
+<li><p><strong>early_max_stepsize</strong> – Early stopping patience. int</p></li>
+<li><p><strong>MSE_training</strong> – Whether to use Mean-Squared Error as a loss function. bool</p></li>
+<li><p><strong>fix</strong> – Whether to use the fixed version of the algorithm. bool</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="evaluators.e_AgiLM.AgiLM.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#evaluators.e_AgiLM.AgiLM.predict" title="Link to this definition">¶</a></dt>
+<dd><p>Performs prediction based on the input data. Fitting is needed prior to prediction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>np.ndarray</em>) – Data from which the target variable is predicted from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted target variable.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="evaluators.e_AgiLM.sigmoid">
+<span class="sig-prename descclassname"><span class="pre">evaluators.e_AgiLM.</span></span><span class="sig-name descname"><span class="pre">sigmoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#evaluators.e_AgiLM.sigmoid" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Adaptive, Hybrid Feature Selection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ahfs_module.html">AHFS class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Evaluators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#evaluators.helpers.eval.EvalBase"><code class="docutils literal notranslate"><span class="pre">EvalBase</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#evaluators.e_AgiLM.AgiLM"><code class="docutils literal notranslate"><span class="pre">AgiLM</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#evaluators.e_AgiLM.sigmoid"><code class="docutils literal notranslate"><span class="pre">sigmoid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feasel/index.html">Measures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils/index.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="ahfs_module.html" title="previous chapter">AHFS class</a></li>
+      <li>Next: <a href="feasel/index.html" title="next chapter">Measures</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Bence Gercuj, Anh Tuan Hoang, Dr. Zsolt János Viharos.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/evals.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

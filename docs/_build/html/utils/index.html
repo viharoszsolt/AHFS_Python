@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Utilities &#8212; Adaptive, Hybrid Feature Selection  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Preset loader" href="preset_loader.html" />
+    <link rel="prev" title="Distance-based Feature Selection" href="../feasel/f_ORIG.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="utilities">
+<h1>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preset_loader.html">Preset loader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preset_loader.html#utils.helpers.loader.LoaderBase"><code class="docutils literal notranslate"><span class="pre">LoaderBase</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="presets.html">Preset configurations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.AbaloneDataset"><code class="docutils literal notranslate"><span class="pre">AbaloneDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.BankDataset"><code class="docutils literal notranslate"><span class="pre">BankDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.CalculatedCuttingFcDataset"><code class="docutils literal notranslate"><span class="pre">CalculatedCuttingFcDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.CalculatedCuttingPDataset"><code class="docutils literal notranslate"><span class="pre">CalculatedCuttingPDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.CalculatedCuttingRaDataset"><code class="docutils literal notranslate"><span class="pre">CalculatedCuttingRaDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.CalculatedCuttingTDataset"><code class="docutils literal notranslate"><span class="pre">CalculatedCuttingTDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.CarDataset"><code class="docutils literal notranslate"><span class="pre">CarDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.CommCrimeDataset"><code class="docutils literal notranslate"><span class="pre">CommCrimeDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.ForestFiresDataset"><code class="docutils literal notranslate"><span class="pre">ForestFiresDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.HousingDataset"><code class="docutils literal notranslate"><span class="pre">HousingDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.IrisDataset"><code class="docutils literal notranslate"><span class="pre">IrisDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.MNISTTrain"><code class="docutils literal notranslate"><span class="pre">MNISTTrain</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.MeasuredCuttingFcDataset"><code class="docutils literal notranslate"><span class="pre">MeasuredCuttingFcDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.MeasuredCuttingPDataset"><code class="docutils literal notranslate"><span class="pre">MeasuredCuttingPDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.MeasuredCuttingRaDataset"><code class="docutils literal notranslate"><span class="pre">MeasuredCuttingRaDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.MeasuredCuttingTDataset"><code class="docutils literal notranslate"><span class="pre">MeasuredCuttingTDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.MitbihTest"><code class="docutils literal notranslate"><span class="pre">MitbihTest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.ParkinsonsTelemonitoringMotorDataset"><code class="docutils literal notranslate"><span class="pre">ParkinsonsTelemonitoringMotorDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.ParkinsonsTelemonitoringTotalDataset"><code class="docutils literal notranslate"><span class="pre">ParkinsonsTelemonitoringTotalDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.ReplicatedParkinsonDataset"><code class="docutils literal notranslate"><span class="pre">ReplicatedParkinsonDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.SonarDataset"><code class="docutils literal notranslate"><span class="pre">SonarDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.SuperConductDataset"><code class="docutils literal notranslate"><span class="pre">SuperConductDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.WineDataset"><code class="docutils literal notranslate"><span class="pre">WineDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.WineQualityRedDataset"><code class="docutils literal notranslate"><span class="pre">WineQualityRedDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.WisconsinBreastCancerDataset"><code class="docutils literal notranslate"><span class="pre">WisconsinBreastCancerDataset</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html#utils.presets.YearPredDataset"><code class="docutils literal notranslate"><span class="pre">YearPredDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#utils.preprocessing.discretize_X_y"><code class="docutils literal notranslate"><span class="pre">discretize_X_y()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="postprocessing.html">Postprocessing, multiple comparisons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html#utils.postprocessing.aggregated_metrics"><code class="docutils literal notranslate"><span class="pre">aggregated_metrics</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html#utils.metrics.Metrics"><code class="docutils literal notranslate"><span class="pre">Metrics</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logs.html#utils.logs.log_results"><code class="docutils literal notranslate"><span class="pre">log_results()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Adaptive, Hybrid Feature Selection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ahfs_module.html">AHFS class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evals.html">Evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feasel/index.html">Measures</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preset_loader.html">Preset loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html">Preset configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html">Postprocessing, multiple comparisons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metrics.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logs.html">Logging</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../feasel/f_ORIG.html" title="previous chapter">Distance-based Feature Selection</a></li>
+      <li>Next: <a href="preset_loader.html" title="next chapter">Preset loader</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Bence Gercuj, Anh Tuan Hoang, Dr. Zsolt János Viharos.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/utils/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

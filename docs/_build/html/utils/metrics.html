@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Metrics &#8212; Adaptive, Hybrid Feature Selection  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Logging" href="logs.html" />
+    <link rel="prev" title="Postprocessing, multiple comparisons" href="postprocessing.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-utils.metrics">
+<span id="metrics"></span><h1>Metrics<a class="headerlink" href="#module-utils.metrics" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.metrics.Metrics">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.metrics.</span></span><span class="sig-name descname"><span class="pre">Metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.metrics.Metrics" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.metrics.Metrics.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.metrics.Metrics.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>A collection of metrics that evaluate the results of classification.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>np.ndarray</em>) – The actual class vector/matrix (assuming one-hot encoding in the latter case).</p></li>
+<li><p><strong>y_pred</strong> (<em>np.ndarray</em>) – The predicted class vector/matrix (assuming one-hot encoding in the latter case).</p></li>
+<li><p><strong>classes</strong> (<em>None</em><em> | </em><em>np.ndarray</em>) – Vector of unique class values. Required for single output classification accuracy calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>_metric_modes</strong> – Map for defining which metric is suitable for a certain target type.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.metrics.Metrics.accuracy_oh">
+<span class="sig-name descname"><span class="pre">accuracy_oh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#utils.metrics.Metrics.accuracy_oh" title="Link to this definition">¶</a></dt>
+<dd><p>Accuracy with one-hot encoded target.
+:return: Classification accuracy
+:rtype: float</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.metrics.Metrics.accuracy_reg">
+<span class="sig-name descname"><span class="pre">accuracy_reg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#utils.metrics.Metrics.accuracy_reg" title="Link to this definition">¶</a></dt>
+<dd><p>Accuracy of classification calculated from single output (regression).
+:return: Classification accuracy
+:rtype: float</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.metrics.Metrics.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#utils.metrics.Metrics.calculate" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the given metrics based on the target labels. The functions are called based on the class vector shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metrics</strong> – List of functions to call. Alternatively, “all” to calculate all metrics. Default value is “all”.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with metric names as keys and scores as values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.metrics.Metrics.root_mean_squared">
+<span class="sig-name descname"><span class="pre">root_mean_squared</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#utils.metrics.Metrics.root_mean_squared" title="Link to this definition">¶</a></dt>
+<dd><p>Root-Mean Squared error.
+:return: RMS error
+:rtype: float</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.metrics.Metrics.root_mean_squared_oh">
+<span class="sig-name descname"><span class="pre">root_mean_squared_oh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#utils.metrics.Metrics.root_mean_squared_oh" title="Link to this definition">¶</a></dt>
+<dd><p>Root-Mean Squared error with one-hot encoded target.
+:return: RMS error
+:rtype: float</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.metrics.Metrics.scaled_root_mean_squared">
+<span class="sig-name descname"><span class="pre">scaled_root_mean_squared</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#utils.metrics.Metrics.scaled_root_mean_squared" title="Link to this definition">¶</a></dt>
+<dd><p>Scaled Root-Mean Squared error. Used with target vectors scaled between 0.1 and 0.9.
+:return: SRMS error
+:rtype: float</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.metrics.Metrics.scaled_root_mean_squared_oh">
+<span class="sig-name descname"><span class="pre">scaled_root_mean_squared_oh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#utils.metrics.Metrics.scaled_root_mean_squared_oh" title="Link to this definition">¶</a></dt>
+<dd><p>Scaled Root-Mean Squared error with one-hot encoded target. Used with target vectors scaled between 0.1 and 0.9.
+:return: SRMS error
+:rtype: float</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Adaptive, Hybrid Feature Selection</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ahfs_module.html">AHFS class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../evals.html">Evaluators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feasel/index.html">Measures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Utilities</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="preset_loader.html">Preset loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presets.html">Preset configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="postprocessing.html">Postprocessing, multiple comparisons</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logs.html">Logging</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Utilities</a><ul>
+      <li>Previous: <a href="postprocessing.html" title="previous chapter">Postprocessing, multiple comparisons</a></li>
+      <li>Next: <a href="logs.html" title="next chapter">Logging</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Bence Gercuj, Anh Tuan Hoang, Dr. Zsolt János Viharos.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/utils/metrics.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
