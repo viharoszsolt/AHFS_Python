@@ -250,7 +250,7 @@ class AHFS:
                         if self.verbose > 0: print(f"{datetime.now()}: FCBF# done")
                     case 2:
                         S_fcbfip, S_ordered_fcbfip, fcbfip_time = result
-                if self.verbose > 0: print(f"{datetime.now()}: FCBFiP done")
+                        if self.verbose > 0: print(f"{datetime.now()}: FCBFiP done")
 
             while len(self.selected) < self.k:
                 measures_start = time.time()
