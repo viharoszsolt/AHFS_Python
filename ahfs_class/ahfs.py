@@ -1,6 +1,7 @@
 from datetime import datetime
 import time
 import random
+from typing import Callable
 
 import joblib
 import numpy as np
@@ -20,7 +21,7 @@ from feasel import f_FCBFiP
 from feasel import f_ORIG
 from feasel import f_mRMR
 
-from evaluators.e_AgiLM import AgiLM
+from evaluators.e_AgiLM import AgiLM, CONST_GPU_THRESHOLD
 from evaluators.e_AgiLM import sigmoid
 
 from utils.preprocessing import discretize_X_y
@@ -397,6 +398,53 @@ class AHFS:
             if self.verbose > 0: print(f"{datetime.now()}: Transform time: {transform_time}")
             return X[list(self.selected)], y
 
+    def nn_one_fold(self, candidate: int, train_index: np.ndarray, test_index: np.ndarray,
+                    nn_layers: list[[int, Callable[[float], float]|None], ]) -> tuple[int, float, float]:
+        """
+        One fold of an evaluation. Used for parallel execution of the evaluation phase if CPU is used.
+
+        :param candidate: Candidate feature index.
+        :type candidate: int
+        :param train_index: Row index of train samples.
+        :type train_index: np.ndarray
+        :param test_index: Row index of test samples.
+        :type test_index: np.ndarray
+        :param nn_layers: Layers of the neural network.
+        :type nn_layers: list[[int, Callable[[float], float]|None], ]
+        :return: Candidate index, loss and accuracy associated with the candidate.
+        :rtype: tuple[int, float, float]
+        """
+
+        X_s = self.X_n[:, list(self.selected) + [candidate]]
+
+        model = AgiLM(layers=nn_layers, tau=1, weights_boundary=[-0.1, 0.1])
+
+        random.seed(time.time_ns())
+        random.shuffle(train_index)
+        random.shuffle(test_index)
+
+        X_train, X_test = X_s[train_index], X_s[test_index]
+        y_train, y_test = self.y_n[train_index].reshape(-1, 1), self.y_n[test_index].reshape(-1, 1)
+
+        X_val = X_test
+        y_val = y_test
+
+        model.fit(train_inputs=X_train,
+                  train_targets=y_train,
+                  val_inputs=X_val,
+                  val_targets=y_val,
+                  mu=1e-3,
+                  initial_tau=1,
+                  max_iteration=1000,
+                  early_max_stepsize=6,
+                  fix=True,
+                  MSE_training=True)
+
+        metrics = model.score(X_test, y_test)
+        metrics.classes = np.unique(self.y_n)
+
+        return candidate, metrics.scaled_root_mean_squared(), metrics.accuracy_reg()
+
     def evaluate(self) -> tuple[int, float | np.floating, float | np.floating]:
         """
         Evaluates the selected feature set using a specific evaluator.
@@ -412,58 +460,90 @@ class AHFS:
 
         cv = StratifiedKFold(n_splits = 3, shuffle = True, random_state = 42)
 
+        nn_layers = [[len(self.selected) + 1, None], [8, sigmoid], [1, sigmoid]]
+        sum = 0
+        for i in range(1, len(nn_layers) - 1):
+            sum += nn_layers[i][0] * nn_layers[i + 1][0]
+        jacobi_size = X.shape[0] * (len(self.selected) + 1 + sum)
+
         candidate_loss: {int: float} = {}
         candidate_accuracy: {int: float} = {}
-        for measure in self.iter_selected.keys():
-            candidate_list = self.iter_selected[measure][-1]
 
-            if len(candidate_list) > 0: candidate = candidate_list[0]
-            else: continue
+        if jacobi_size >= CONST_GPU_THRESHOLD:
+            for measure in self.iter_selected.keys():
+                candidate_list = self.iter_selected[measure][-1]
 
-            if candidate in candidate_loss: continue
+                if len(candidate_list) > 0: candidate = candidate_list[0]
+                else: continue
 
-            fold_loss = []
-            fold_accuracy = []
-            X_s = X[:, list(self.selected) + [candidate]]
-            for i, (train_index, test_index) in enumerate(cv.split(X_s, self.y_d)):
-                model = AgiLM(layers = [[len(self.selected) + 1, None], [8, sigmoid], [1, sigmoid]],
-                              tau = 1, weights_boundary = [-0.1, 0.1])
+                if candidate in candidate_loss: continue
 
-                if self.verbose > 0: print(f"{datetime.now()}: Fold {i + 1}")
+                fold_loss = []
+                fold_accuracy = []
+                X_s = X[:, list(self.selected) + [candidate]]
+                for i, (train_index, test_index) in enumerate(cv.split(X_s, self.y_d)):
+                    model = AgiLM(layers = nn_layers, tau = 1, weights_boundary = [-0.1, 0.1])
 
-                random.seed(time.time_ns())
-                random.shuffle(train_index)
-                random.shuffle(test_index)
+                    if self.verbose > 0: print(f"{datetime.now()}: Fold {i + 1}")
 
-                X_train, X_test = X_s[train_index], X_s[test_index]
-                y_train, y_test = y[train_index].reshape(-1, 1), y[test_index].reshape(-1, 1)
+                    random.seed(time.time_ns())
+                    random.shuffle(train_index)
+                    random.shuffle(test_index)
 
-                X_val = X_test
-                y_val = y_test
+                    X_train, X_test = X_s[train_index], X_s[test_index]
+                    y_train, y_test = y[train_index].reshape(-1, 1), y[test_index].reshape(-1, 1)
 
-                model.fit(train_inputs = X_train,
-                          train_targets = y_train,
-                          val_inputs = X_val,
-                          val_targets = y_val,
-                          mu = 1e-3,
-                          initial_tau = 1,
-                          max_iteration = 1000,
-                          early_max_stepsize = 6,
-                          fix = True,
-                          MSE_training = True)
+                    X_val = X_test
+                    y_val = y_test
 
-                metrics = model.score(X_test, y_test)
-                metrics.classes = classes
+                    model.fit(train_inputs = X_train,
+                              train_targets = y_train,
+                              val_inputs = X_val,
+                              val_targets = y_val,
+                              mu = 1e-3,
+                              initial_tau = 1,
+                              max_iteration = 1000,
+                              early_max_stepsize = 6,
+                              fix = True,
+                              MSE_training = True)
 
-                fold_loss.append(metrics.scaled_root_mean_squared())
-                fold_accuracy.append(metrics.accuracy_reg())
-                if self.verbose > 1: print(f"{datetime.now()}: Feature {candidate} fold {i + 1} loss: {fold_loss[-1]}")
-                if self.verbose > 1: print(f"{datetime.now()}: Feature {candidate} fold {i + 1} accuracy: {fold_accuracy[-1]}")
+                    metrics = model.score(X_test, y_test)
+                    metrics.classes = classes
 
-            candidate_loss[candidate] = np.mean(fold_loss)
-            candidate_accuracy[candidate] = np.mean(fold_accuracy)
-            if self.verbose > 0: print(f"{datetime.now()}: Scaled RMSE for feature {candidate}:", candidate_loss[candidate])
-            if self.verbose > 0: print(f"{datetime.now()}: Accuracy for feature {candidate}:", candidate_accuracy[candidate])
+                    fold_loss.append(metrics.scaled_root_mean_squared())
+                    fold_accuracy.append(metrics.accuracy_reg())
+                    if self.verbose > 1: print(f"{datetime.now()}: Feature {candidate} fold {i + 1} loss: {fold_loss[-1]}")
+                    if self.verbose > 1: print(f"{datetime.now()}: Feature {candidate} fold {i + 1} accuracy: {fold_accuracy[-1]}")
+
+                candidate_loss[candidate] = np.mean(fold_loss)
+                candidate_accuracy[candidate] = np.mean(fold_accuracy)
+                if self.verbose > 0: print(f"{datetime.now()}: Scaled RMSE for feature {candidate}:", candidate_loss[candidate])
+                if self.verbose > 0: print(f"{datetime.now()}: Accuracy for feature {candidate}:", candidate_accuracy[candidate])
+
+        else:
+            cv_indices = dict({})
+            for measure in self.iter_selected.keys():
+                candidate_list = self.iter_selected[measure][-1]
+
+                if len(candidate_list) > 0: candidate = candidate_list[0]
+                else: continue
+
+                if candidate in cv_indices: continue
+                else: cv_indices[candidate] = list(cv.split(X, self.y_d))
+
+            candidate_all_loss: {int: list[float]} = {k: [] for k in cv_indices.keys()}
+            candidate_all_accuracy: {int: list[float]} = {k: [] for k in cv_indices.keys()}
+
+            for result in Parallel(return_as="generator")(delayed(self.nn_one_fold)(c, f[0], f[1], nn_layers) for c in cv_indices.keys() for f in cv_indices[c]):
+                candidate_all_loss[result[0]].append(result[1])
+                candidate_all_accuracy[result[0]].append(result[2])
+
+            for k in candidate_all_loss.keys():
+                candidate_loss[k] = np.mean(candidate_all_loss[k])
+                if self.verbose > 0: print(f"{datetime.now()}: Scaled RMSE for feature {k}: {candidate_loss[k]}")
+
+                candidate_accuracy[k] = np.mean(candidate_all_accuracy[k])
+                if self.verbose > 0: print(f"{datetime.now()}: Accuracy for feature {k}: {candidate_accuracy[k]}")
 
         selected = min(candidate_loss, key = candidate_loss.get)
         if self.verbose > 0: print(f"{datetime.now()}: Selected feature: {selected}\n")
