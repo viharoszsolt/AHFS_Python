@@ -1,3 +1,26 @@
+def run_one_dataset(path: str, target: str, size: int) -> None:
+    import pandas as pd
+    from ahfs_class.ahfs import AHFS
+
+    """
+    Runs one dataset. See utils/presets.py and utils/helpers/loader.py for more specific usage.
+
+    :param path: Path to the .csv file.
+    :type path: str
+    :param target: Path to the target variable (assumed .csv).
+    :type target: str
+    :param size: Number of features to select.
+    :type size: int
+    
+    :return: None
+    """
+
+    data = pd.read_csv(path).values
+    target = pd.read_csv(target).values
+
+    ahfs = AHFS(size)
+    sel, loss, acc, perit = ahfs.transform(data, target)
+
 def run_all_presets() -> None:
     """
     Runs all preset datasets with their fixed configuration 5 times each, logging each run.
