@@ -1,5 +1,6 @@
 import numpy as np
 import copy
+import pickle
 
 tr_Ek = []
 vl_Eexpabs = []
@@ -301,3 +302,12 @@ class NeuralNetwork:
 
     def evaluate(self, test_inputs):
         return self.forward_propagation(test_inputs, mode=2)
+		
+		
+    def save_model(self, path):
+        with open(path, 'wb') as f:
+            pickle.dump(self.optimal, f)
+
+    def load_model(self, path):
+        with open(path, 'rb') as f:
+        self.optimal = pickle.load(f)

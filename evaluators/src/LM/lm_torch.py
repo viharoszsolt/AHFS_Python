@@ -3,6 +3,7 @@ import warnings
 import numpy as np
 import torch as tc
 import copy
+import pickle
 
 import time
 
@@ -335,3 +336,12 @@ class NeuralNetwork:
 
     def evaluate(self, test_inputs):
         return self.forward_propagation(test_inputs, mode=2)
+
+
+    def save_model(self, path):
+        with open(path, 'wb') as f:
+            pickle.dump(self.optimal, f)
+
+    def load_model(self, path):
+        with open(path, 'rb') as f:
+        self.optimal = pickle.load(f)
