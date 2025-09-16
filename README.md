@@ -59,6 +59,12 @@ Consult the [API documentation](https://ahfs.readthedocs.io/en/latest/) for furt
 
 Consult the [API documentation](https://ahfs.readthedocs.io/en/latest/) for further details.
 
+### Running the algorithm on a demo dataset
+
+The chosen demo dataset is Boston Housing, which consists of 13 features. The time evolution of the model error can be plotted by running the second section. The result can be seen in the figure below.
+
+![housing](images/housing_error_curve.png)
+
 ## FAQ
 
 1. I get the warning message ***CUDA is not available! Using CPU..***
