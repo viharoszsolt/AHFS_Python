@@ -1,4 +1,4 @@
-# Adaptive, Hybrid Feature Selection
+# Adaptive, Hybrid Feature Selection (AHFS)
 
 Python implementation of the Adaptive, Hybrid Feature Selection algorithm (AHFS), originally developed by [Viharos et al.](https://doi.org/10.1016/j.patcog.2021.107932)
 For scientific or related inquiries, please contact [Dr. Zsolt János Viharos](https://sztaki.hun-ren.hu/en/organisation/departments/emi/zsolt-janos-viharos) and [Anh Tuan Hoang](https://sztaki.hun-ren.hu/en/organisation/departments/emi/anh-tuan-hoang).
